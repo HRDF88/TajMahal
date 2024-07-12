@@ -10,15 +10,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -121,6 +124,54 @@ public class DetailsFragment extends Fragment {
         binding.buttonAdress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
+        detailsViewModel.getReviews().observe(this,reviews->{
+            int countReviews = reviews.size();
+            int countRateOneStar = 0;
+            int countRateTwoStar = 0;
+            int countRateThreeStar =0;
+            int countRateFourStar = 0;
+            int countRateFiveStar = 0;
+            for (Review review:reviews){
+                if (review.getRate() == 5) {
+                    countRateFiveStar++;
+                }
+                else if (review.getRate() == 4) {
+                    countRateFourStar++;
+                }
+                else if (review.getRate()==3) {
+                    countRateThreeStar++;
+                } else if (review.getRate()==2) {
+                    countRateTwoStar++;
+                }
+                else countRateOneStar++;
+            }
+            binding.progressBar5.setProgress(countRateFiveStar);
+            binding.progressBar5.setMax(countReviews);
+            binding.progressBar4.setProgress(countRateFourStar);
+            binding.progressBar4.setMax(countReviews);
+            binding.progressBar3.setProgress(countRateThreeStar);
+            binding.progressBar3.setMax(countReviews);
+            binding.progressBar2.setProgress(countRateTwoStar);
+            binding.progressBar2.setMax(countReviews);
+            binding.progressBar.setProgress(countRateOneStar);
+            binding.progressBar.setMax(countReviews);
+
+
+            //1 etape : recup taille total du nb de reviews,
+            //2 etape initialiser 5 compteur à 0 (int)
+            //je boucle sur les reviews, pour chaque reviews faire incrementation ++
+
+        });
+        binding.chipTakeAway.setOnClickListener(view -> {
+            changerFragment();
+        });
+    }
+//* permet de naviguer entre les fragment grace a la methode changer fragment crée ci-dessous
+    private void changerFragment() {
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, ReviewFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
     }
 
     /**
