@@ -97,10 +97,11 @@
 
         <LinearLayout
             android:id="@+id/linear"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName">
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName"
+            tools:ignore="MissingConstraints">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -111,66 +112,91 @@
                     android:id="@+id/some_id"
                     android:layout_width="42dp"
                     android:layout_height="30dp"
+                    android:layout_marginStart="40dp"
                     android:fontFamily="@font/jakarta_bold"
                     android:gravity="start"
-                    android:text="4.0"
-                    android:textSize="24sp"
-                    android:layout_marginStart="40dp"/>
+                    tools:text="4.0"
+                    android:textSize="24sp" />
 
                 <RatingBar
                     android:id="@+id/toiles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="-50dp"
                     android:isIndicator="true"
                     android:numStars="5"
                     android:progressTint="@color/gold"
-                    android:rating="4"
                     android:scaleX="0.5"
                     android:scaleY="0.5"
-                    android:stepSize="0.5"
-                    android:layout_marginStart="-50dp"/>
+                    android:stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/averageRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:fontFamily="@font/jakarta_regular"
+                    android:gravity="start"
+                    android:text="(257)"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_width="204dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleX="4.25" />
+                    android:progressTint="@color/gold"
+                    android:scaleX="4.75" />
 
                 <ProgressBar
                     android:id="@+id/progressBar2"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleX="4.25"/>
+                    android:progressTint="@color/gold"
+                    android:scaleX="4.75" />
 
                 <ProgressBar
                     android:id="@+id/progressBar3"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleX="4.25"/>
+                    android:progressTint="@color/gold"
+                    android:scaleX="4.75" />
 
                 <ProgressBar
                     android:id="@+id/progressBar4"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleX="4.25"/>
+                    android:progressTint="@color/gold"
+                    android:scaleX="4.75" />
 
                 <ProgressBar
                     android:id="@+id/progressBar5"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:scaleX="4.25"/>
+                    android:progressTint="@color/gold"
+                    android:scaleX="4.75" />
+
+                <TextView
+                    android:id="@+id/goReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/jakarta_semibold"
+                    android:gravity="bottom"
+                    android:text="Laissez un avis"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 

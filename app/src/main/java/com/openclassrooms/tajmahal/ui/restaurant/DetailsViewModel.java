@@ -1,13 +1,16 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
 import android.content.Context;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
-import com.openclassrooms.tajmahal.data.service.RestaurantApi;
+import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
@@ -28,7 +31,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class DetailsViewModel extends ViewModel {
 
-    private final RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
     /**
      * Constructor that Hilt will use to create an instance of MainViewModel.
@@ -38,6 +41,12 @@ public class DetailsViewModel extends ViewModel {
     @Inject
     public DetailsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
+    }
+public DetailsViewModel(){
+        this.restaurantRepository= new RestaurantRepository(new RestaurantFakeApi());
+}
+    public static Object getReviews(ImageView userPicture) {
+        return null;
     }
 
     /**
@@ -87,10 +96,14 @@ public class DetailsViewModel extends ViewModel {
         return dayString;
     }
 
-    public LiveData<List<Review>> getReviews() {
+    public  LiveData<List<Review>> getReviews() {
       return restaurantRepository.getReviews();
     }
     //* Utilisation de la méthode getReviews située dans la classe RestaurantApi vers le View Model
+
+
+
+
 
 }
 

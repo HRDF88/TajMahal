@@ -1,5 +1,6 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -10,12 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.openclassrooms.tajmahal.R;
@@ -108,6 +107,7 @@ public class DetailsFragment extends Fragment {
      *
      * @param restaurant The restaurant object containing details to be displayed.
      */
+    @SuppressLint("SetTextI18n")
     private void updateUIWithRestaurant(Restaurant restaurant) {
         if (restaurant == null) return;
 
@@ -124,7 +124,7 @@ public class DetailsFragment extends Fragment {
         binding.buttonAdress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
-        detailsViewModel.getReviews().observe(this,reviews->{
+        detailsViewModel.getReviews().observe(this, reviews->{
             int countReviews = reviews.size();
             int countRateOneStar = 0;
             int countRateTwoStar = 0;
@@ -145,6 +145,11 @@ public class DetailsFragment extends Fragment {
                 }
                 else countRateOneStar++;
             }
+
+            //1 etape : recup taille total du nb de reviews,
+            //2 etape initialiser 5 compteur à 0 (int)
+            //je boucle sur les reviews, pour chaque reviews faire incrementation ++
+
             binding.progressBar5.setProgress(countRateFiveStar);
             binding.progressBar5.setMax(countReviews);
             binding.progressBar4.setProgress(countRateFourStar);
@@ -155,22 +160,28 @@ public class DetailsFragment extends Fragment {
             binding.progressBar2.setMax(countReviews);
             binding.progressBar.setProgress(countRateOneStar);
             binding.progressBar.setMax(countReviews);
+            //met à jour la progression des progressBar + les valeurs Max de celles-ci
 
-
-            //1 etape : recup taille total du nb de reviews,
-            //2 etape initialiser 5 compteur à 0 (int)
-            //je boucle sur les reviews, pour chaque reviews faire incrementation ++
+            float rateAverage=(((countRateOneStar)+(countRateTwoStar*2)+(countRateThreeStar*3)+(countRateFourStar*4)+(countRateFiveStar*5))/countReviews);
+            binding.toiles.setRating(rateAverage);//changement pour setRating de façon à utiliser un float, binding.toiles.setMax(5) a utiliser si int
+            //calcul de la moyenne des notes plus affichage de celle-ci sur la ratingBar
+            binding.someId.setText(""+rateAverage+"");
+            //affichage de la moyenne des notes dans le textView en dessous de la ratingBar
+            binding.averageRate.setText("("+countReviews+")");
+            //affichage du nombre de reviews dans le textView countReview
 
         });
-        binding.chipTakeAway.setOnClickListener(view -> {
+
+        binding.goReview.setOnClickListener(view -> {
             changerFragment();
         });
+
     }
 //* permet de naviguer entre les fragment grace a la methode changer fragment crée ci-dessous
     private void changerFragment() {
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, ReviewFragment.newInstance())
-                .addToBackStack(null)
+                .replace(R.id.container, NoticeFragment.newInstance())
+                .addToBackStack("Retour")
                 .commit();
     }
 

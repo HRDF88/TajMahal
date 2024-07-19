@@ -2,20 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="6dp"
+            android:layout_margin="2dp"
+            android:paddingHorizontal="10dp"
             >
 
             <androidx.cardview.widget.CardView
@@ -31,9 +34,9 @@
                 app:cardCornerRadius="250dp">
 
                 <ImageView
-                    android:id="@+id/pictureReview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:id="@+id/userPictureReview"
+                    android:layout_width="69dp"
+                    android:layout_height="69dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/logo" />
 
@@ -45,38 +48,52 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/userName"
+                    android:layout_width="88dp"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:layout_marginStart="18dp"
+                    android:fontFamily="@font/jakarta_bold"
+                    android:text="userName" />
 
                 <RatingBar
-                    android:id="@+id/ratingBar"
+                    android:id="@+id/userRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="-45dp"
                     android:numStars="5"
                     android:progressTint="@color/gold"
-                    android:rating="4"/>
+                    android:rating="4"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/userButton"
+                android:layout_width="0dp"
+                android:layout_height="37dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:backgroundTint="@color/red"
+                android:fontFamily="@font/jakarta_bold"
+                android:text="@string/confirm"
+                android:textSize="11sp"
+                android:textAlignment="center"
+                />
 
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints">
+            android:scaleType="centerCrop">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Partagez ici les détails de votre expérience"/>
+                android:hint="@string/hint_comment"
+                app:chipCornerRadius="25dp"
+                android:scaleType="centerCrop"
+                android:textStyle="italic"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <View
@@ -89,6 +106,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewReviews"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
