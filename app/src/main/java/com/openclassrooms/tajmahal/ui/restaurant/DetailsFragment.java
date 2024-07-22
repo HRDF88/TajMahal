@@ -21,6 +21,8 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
+
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -162,7 +164,7 @@ public class DetailsFragment extends Fragment {
             binding.progressBar.setMax(countReviews);
             //met à jour la progression des progressBar + les valeurs Max de celles-ci
 
-            float rateAverage=(((countRateOneStar)+(countRateTwoStar*2)+(countRateThreeStar*3)+(countRateFourStar*4)+(countRateFiveStar*5))/countReviews);
+            float rateAverage=((float) ((countRateOneStar) + (countRateTwoStar * 2) + (countRateThreeStar * 3) + (countRateFourStar * 4) + (countRateFiveStar * 5)) /countReviews);
             binding.toiles.setRating(rateAverage);//changement pour setRating de façon à utiliser un float, binding.toiles.setMax(5) a utiliser si int
             //calcul de la moyenne des notes plus affichage de celle-ci sur la ratingBar
             binding.someId.setText(""+rateAverage+"");

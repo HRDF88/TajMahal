@@ -23,6 +23,8 @@
     <string name="phone_icon">Phone icon</string>
     <string name="confirm">Valider</string>
     <string name="hint_comment">Partagez ici les détails de votre expérience</string>
+    <string name="alert_no_rate">Veuillez entrer une note</string>
+    <string name="alert_no_comment">Veuillez entrer un commentaire</string>
 
 
 </resources>

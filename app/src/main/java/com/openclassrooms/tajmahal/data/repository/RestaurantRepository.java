@@ -1,12 +1,15 @@
 package com.openclassrooms.tajmahal.data.repository;
 
+import android.annotation.SuppressLint;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
 
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
-
+import com.openclassrooms.tajmahal.domain.model.User;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,5 +60,10 @@ public class RestaurantRepository {
     public LiveData<List<Review>> getReviews() {
         return new MutableLiveData<>(restaurantApi.getReviews());
 
+    }
+
+    @SuppressLint("RestrictedApi")
+    public LiveData<User> getUser() {
+        return new MutableLiveData<>(restaurantApi.getUser());
     }
 }

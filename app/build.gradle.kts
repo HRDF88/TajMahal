@@ -39,6 +39,7 @@ android {
 
 dependencies {
     implementation("androidx.work:work-runtime:2.8.1")
+    implementation("com.google.firebase:firebase-firestore:25.0.0")
     val hiltVersion = "2.44"
 
     //Hilt
@@ -50,6 +51,9 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.work:work-runtime:2.8.1")
     implementation("androidx.core:core-splashscreen:1.0.0")
+
+    // bibliotheque glide pour url image
+    implementation ("com.github.bumptech.glide:glide:4.10.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

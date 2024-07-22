@@ -2,6 +2,7 @@ package com.openclassrooms.tajmahal.data.service;
 
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,9 @@ public class RestaurantFakeApi implements RestaurantApi {
     );
 
 
+
+
+
     /**
      * Retrieves a hard-coded {@link Restaurant} object for the "Taj Mahal".
      * <p>
@@ -69,6 +73,11 @@ public class RestaurantFakeApi implements RestaurantApi {
     @Override
     public List<Review> getReviews() {
         return reviews;
+    }
+
+    @Override
+    public User getUser() {
+        return new User("Marion Garcia","https://philomonaco.com/wp-content/uploads/2022/04/thumbnail-photo-livre-manon-2.jpg");
     }
 
 }

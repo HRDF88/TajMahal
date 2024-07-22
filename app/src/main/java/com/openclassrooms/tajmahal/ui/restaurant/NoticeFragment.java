@@ -1,5 +1,8 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +14,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
+import com.bumptech.glide.Glide;
+import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentNoticeBinding;
+import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
 
 public class NoticeFragment extends Fragment {
     private DetailsViewModel detailsViewModel;
     private @NonNull FragmentNoticeBinding binding;
 
     private ReviewListAdapter adapter;
+    private Context context;
 
     public NoticeFragment() {
         super();
@@ -53,6 +60,7 @@ public class NoticeFragment extends Fragment {
         binding = FragmentNoticeBinding.inflate(inflater, container, false); // Binds the layout using view binding.
         setupAdapter();
         setupUI();
+        setupUser();
         return binding.getRoot(); // Returns the root view.
     }
 
@@ -68,7 +76,63 @@ public class NoticeFragment extends Fragment {
         binding.recyclerViewReviews.setLayoutManager(new LinearLayoutManager(getActivity()));
     binding.recyclerViewReviews.setAdapter(adapter);
     }
+    private void createReview() {
+        binding.userButton.setOnClickListener(view -> reviewElement());
+    }
+
+    private Object reviewElement() {
+
+        String commentUser = "";
+        String nameUser="";
+        float rateUser=0;
+        String pictureUser="";
+// utiliser la bibliotheque pour retourner url pictures et non image ressource
+        // binding des elments de l user pour recuperer les éléments saisies
+        binding.userComment.setText(commentUser);
+        binding.userPictureReview.setText(pictureUser);
+        binding.userRatingBar.setRating(rateUser);
+        binding.userName.setText(nameUser);
+        if (rateUser==0){
+            AlertDialog alert11 = getAlertDialogNoRate();
+            alert11.show();
+        }
+        if (commentUser.isEmpty()){
+            AlertDialog alert11 = getAlertDialogNoComment();
+            alert11.show();
+        }
+        return new Review(commentUser,nameUser,rateUser,pictureUser);
 
 
+    };
+// boite de dialog si pas de note de saisie dans la rating bar
+    private AlertDialog getAlertDialogNoRate() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setMessage(R.string.alert_no_rate);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                (dialog, id) -> dialog.cancel());
+
+
+        return builder1.create();
+    }
+    // boite de dialog si pas de commentaire de saisie
+    private AlertDialog getAlertDialogNoComment() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setMessage(R.string.alert_no_comment);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "OK",
+                (dialog, id) -> dialog.cancel());
+
+
+        return builder1.create();
+    }
+    private void setupUser(){
+        binding.userName.setText(User.getUsername());
+        Glide.with(new Fragment()).load(User.getPicture()).into(R.id.userPictureReview);
+    }
 }
 

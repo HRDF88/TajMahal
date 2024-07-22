@@ -1,18 +1,19 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+
 
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.User;
 
 import javax.inject.Inject;
 
@@ -100,6 +101,9 @@ public DetailsViewModel(){
       return restaurantRepository.getReviews();
     }
     //* Utilisation de la méthode getReviews située dans la classe RestaurantApi vers le View Model
+
+
+    public LiveData<User> getUser() {return restaurantRepository.getUser();}
 
 
 

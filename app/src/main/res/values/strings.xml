@@ -23,6 +23,8 @@
     <string name="phone_icon">Phone icon</string>
     <string name="confirm">Confirm</string>
     <string name="hint_comment">Share details of your experience here</string>
+    <string name="alert_no_rate">Please enter a note</string>
+    <string name="alert_no_comment">Please enter a comment</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
