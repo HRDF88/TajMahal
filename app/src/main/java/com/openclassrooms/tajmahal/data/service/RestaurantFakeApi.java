@@ -36,7 +36,8 @@ public class RestaurantFakeApi implements RestaurantApi {
             new Review("Martyna Siddeswara", "https://xsgames.co/randomusers/assets/avatars/female/31.jpg", "Un service excellent et des plats incroyablement savoureux. Nous sommes vraiment satisfaits de notre expérience au restaurant.", 4),
             new Review("Komala Alanazi", "https://xsgames.co/randomusers/assets/avatars/male/46.jpg", "La cuisine est délicieuse et le service est également excellent. Le propriétaire est très sympathique et veille toujours à ce que votre repas soit satisfaisant. Cet endroit est un choix sûr!", 5),
             new Review("David John", "https://xsgames.co/randomusers/assets/avatars/male/67.jpg", "Les currys manquaient de diversité de saveurs et semblaient tous à base de tomates. Malgré les évaluations élevées que nous avons vues et nos attentes, nous avons été déçus.", 2),
-            new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4)
+            new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4),
+            new Review("Jocelin Testing","https://qph.cf2.quoracdn.net/main-qimg-c22737796519e6fa6d4c082d05ed2c5c-lq","Tester c'est douter",1)
     );
 
 
@@ -77,7 +78,21 @@ public class RestaurantFakeApi implements RestaurantApi {
 
     @Override
     public User getUser() {
-        return new User("Marion Garcia","https://philomonaco.com/wp-content/uploads/2022/04/thumbnail-photo-livre-manon-2.jpg");
+        return new User("Manon Garcia","https://philomonaco.com/wp-content/uploads/2022/04/thumbnail-photo-livre-manon-2.jpg");
+    }
+
+    @Override
+    public void addReview(String comment, Integer rate, String picture, String userName) {
+        if(comment.isEmpty()) return;
+        if(rate==null) return;
+        if (rate<0) return;
+        Review review = new Review(userName,picture, comment,rate);
+
+        List<Review> tmp = new ArrayList<>();
+        tmp.add(review);
+        tmp.addAll(reviews);
+
+        reviews= tmp;
     }
 
 }

@@ -46,9 +46,6 @@ public class DetailsViewModel extends ViewModel {
 public DetailsViewModel(){
         this.restaurantRepository= new RestaurantRepository(new RestaurantFakeApi());
 }
-    public static Object getReviews(ImageView userPicture) {
-        return null;
-    }
 
     /**
      * Fetches the details of the Taj Mahal restaurant.
@@ -104,8 +101,11 @@ public DetailsViewModel(){
 
 
     public LiveData<User> getUser() {return restaurantRepository.getUser();}
+    // utilisation de la methode getUser située dans la classe RestaurantApi vers le view Model
 
-
+    public void addReview(String comment, Integer rate, String picture, String userName){
+        restaurantRepository.addReview(comment,rate,picture,userName);
+    }
 
 
 

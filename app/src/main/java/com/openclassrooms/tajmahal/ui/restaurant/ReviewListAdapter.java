@@ -34,6 +34,8 @@ import java.util.List;
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder>{
 
 
+
+
     List<Review> reviewList;
     public ReviewListAdapter (){
         this.reviewList = new ArrayList<>();
@@ -44,6 +46,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
         this.reviewList = reviews;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,10 +64,10 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
 
 
 
-      holder.userPicture = Glide.with(new Fragment())
-              .load(reviewList.get(position).getPicture())
-              .into(R.id.pictureReview);
-
+        Glide.with(holder.userPicture.getContext())
+         .load(reviewList.get(position).getPicture())
+         .into(holder.userPicture);
+// bibliothèque Glide pour recup URL image et target vers userPicture
         holder.userName.setText(reviewList.get(position).getUsername());
         holder.userReview.setText(reviewList.get(position).getComment());
         holder.userRate.setRating(reviewList.get(position).getRate());
@@ -91,7 +94,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
         @SuppressLint("WrongViewCast")
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-          userPicture = itemView.findViewById(pictureReview);
+           userPicture = itemView.findViewById(pictureReview);
            userName= itemView.findViewById(R.id.usernameReview);
            userReview = itemView.findViewById(R.id.commentReview);
            userRate = itemView.findViewById(R.id.ratingBarReview);

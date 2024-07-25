@@ -1,5 +1,6 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,12 +21,18 @@ import com.openclassrooms.tajmahal.databinding.FragmentNoticeBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
 
+import org.jetbrains.annotations.Contract;
+
+import java.util.Objects;
+
 public class NoticeFragment extends Fragment {
     private DetailsViewModel detailsViewModel;
     private @NonNull FragmentNoticeBinding binding;
 
     private ReviewListAdapter adapter;
     private Context context;
+
+    private User user;
 
     public NoticeFragment() {
         super();
@@ -61,6 +68,7 @@ public class NoticeFragment extends Fragment {
         setupAdapter();
         setupUI();
         setupUser();
+        createReview();
         return binding.getRoot(); // Returns the root view.
     }
 
@@ -77,19 +85,28 @@ public class NoticeFragment extends Fragment {
     binding.recyclerViewReviews.setAdapter(adapter);
     }
     private void createReview() {
-        binding.userButton.setOnClickListener(view -> reviewElement());
+        binding.userButton.setOnClickListener(view -> {
+            String comment = Objects.requireNonNull(binding.userComment.getText()).toString();
+            float rate = binding.userRatingBar.getRating();
+
+
+            detailsViewModel.addReview(comment,(int)rate,user.getPicture(),user.getUsername());
+            setupUI();
+        });
     }
 
+    @NonNull
+    @Contract(" -> new")
     private Object reviewElement() {
 
         String commentUser = "";
         String nameUser="";
-        float rateUser=0;
+        int rateUser=0;
         String pictureUser="";
 // utiliser la bibliotheque pour retourner url pictures et non image ressource
-        // binding des elments de l user pour recuperer les éléments saisies
+        // binding des elements de l user pour recuperer les éléments saisies
         binding.userComment.setText(commentUser);
-        binding.userPictureReview.setText(pictureUser);
+       // binding.userPictureReview.setText(pictureUser);
         binding.userRatingBar.setRating(rateUser);
         binding.userName.setText(nameUser);
         if (rateUser==0){
@@ -100,7 +117,9 @@ public class NoticeFragment extends Fragment {
             AlertDialog alert11 = getAlertDialogNoComment();
             alert11.show();
         }
-        return new Review(commentUser,nameUser,rateUser,pictureUser);
+        return new Review(commentUser,nameUser,pictureUser,rateUser);
+        
+
 
 
     };
@@ -131,8 +150,16 @@ public class NoticeFragment extends Fragment {
         return builder1.create();
     }
     private void setupUser(){
-        binding.userName.setText(User.getUsername());
-        Glide.with(new Fragment()).load(User.getPicture()).into(R.id.userPictureReview);
+        detailsViewModel.getUser().observe(getViewLifecycleOwner(),user -> {
+            this.user = user;
+            binding.userName.setText(user.getUsername());
+            Glide.with(binding.userPictureReview.getContext())
+                    .load(user.getPicture())
+                    .into(binding.userPictureReview);
+        });
+        //permet d'aller cher les éléments au viewmodel
+
+
     }
 }
 

@@ -52,5 +52,12 @@ public interface RestaurantApi {
      */
     List<Review> getReviews();
 
+    //
     User getUser();
+
+    void addReview(String comment, Integer rate, String picture, String userName);
+
+
+
 }
+

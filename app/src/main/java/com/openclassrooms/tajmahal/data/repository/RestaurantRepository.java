@@ -62,8 +62,12 @@ public class RestaurantRepository {
 
     }
 
-    @SuppressLint("RestrictedApi")
+
     public LiveData<User> getUser() {
         return new MutableLiveData<>(restaurantApi.getUser());
+    }
+
+    public void addReview(String comment, Integer rate, String picture, String userName){
+        restaurantApi.addReview(comment,rate,picture,userName);
     }
 }
