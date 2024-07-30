@@ -94,7 +94,7 @@
                 app:chipCornerRadius="25dp"
                 android:scaleType="centerCrop"
                 android:textStyle="italic"
-                android:layout_margin="6dp"/>
+                android:layout_margin="12dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <View

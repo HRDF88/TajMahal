@@ -106,6 +106,7 @@ public DetailsViewModel(){
     public void addReview(String comment, Integer rate, String picture, String userName){
         restaurantRepository.addReview(comment,rate,picture,userName);
     }
+    // utilisation de la méthode AddReview située dans la clare RestaurantApi vers le View Model
 
 
 

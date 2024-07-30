@@ -37,7 +37,7 @@ public class RestaurantFakeApi implements RestaurantApi {
             new Review("Komala Alanazi", "https://xsgames.co/randomusers/assets/avatars/male/46.jpg", "La cuisine est délicieuse et le service est également excellent. Le propriétaire est très sympathique et veille toujours à ce que votre repas soit satisfaisant. Cet endroit est un choix sûr!", 5),
             new Review("David John", "https://xsgames.co/randomusers/assets/avatars/male/67.jpg", "Les currys manquaient de diversité de saveurs et semblaient tous à base de tomates. Malgré les évaluations élevées que nous avons vues et nos attentes, nous avons été déçus.", 2),
             new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4),
-            new Review("Jocelin Testing","https://qph.cf2.quoracdn.net/main-qimg-c22737796519e6fa6d4c082d05ed2c5c-lq","Tester c'est douter",1)
+            new Review("Jocelin Testing","https://qph.cf2.quoracdn.net/main-qimg-c22737796519e6fa6d4c082d05ed2c5c-lq","Tester c'est douter",5)
     );
 
 
@@ -76,11 +76,13 @@ public class RestaurantFakeApi implements RestaurantApi {
         return reviews;
     }
 
+    // Fake API de l'user
     @Override
     public User getUser() {
         return new User("Manon Garcia","https://philomonaco.com/wp-content/uploads/2022/04/thumbnail-photo-livre-manon-2.jpg");
     }
 
+    // Add review pour ajoutter une review la list des review en 1er position gràce la liste TMP temporaire( gràce à Add et AddAll effectuée pas à pas donc asynchrone.  Contrôle des éléments : pas de commentaire vide ni de note <0
     @Override
     public void addReview(String comment, Integer rate, String picture, String userName) {
         if(comment.isEmpty()) return;

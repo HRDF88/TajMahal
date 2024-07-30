@@ -62,7 +62,7 @@ public class RestaurantRepository {
 
     }
 
-
+// récupération de l'user et de la méthode addReview de l'API
     public LiveData<User> getUser() {
         return new MutableLiveData<>(restaurantApi.getUser());
     }

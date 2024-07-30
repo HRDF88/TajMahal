@@ -71,7 +71,7 @@ public class NoticeFragment extends Fragment {
         createReview();
         return binding.getRoot(); // Returns the root view.
     }
-
+// méthode permetant la MAJ UI des reviews
     private void setupUI() {
         detailsViewModel.getReviews().observe(getViewLifecycleOwner(),reviews -> {
             adapter.updateList(reviews);
@@ -84,6 +84,8 @@ public class NoticeFragment extends Fragment {
         binding.recyclerViewReviews.setLayoutManager(new LinearLayoutManager(getActivity()));
     binding.recyclerViewReviews.setAdapter(adapter);
     }
+
+    // permet de recupérer le commentaire et note pour transmettre au view model (arguments ===> pour méthode addReview)
     private void createReview() {
         binding.userButton.setOnClickListener(view -> {
             String comment = Objects.requireNonNull(binding.userComment.getText()).toString();

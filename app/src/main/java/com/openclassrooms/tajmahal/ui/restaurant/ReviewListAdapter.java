@@ -46,7 +46,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
         this.reviewList = reviews;
         notifyDataSetChanged();
     }
-
+// View Holder pour Recycler View
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,12 +58,9 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     }
 
 
-
+// binding des éléments du View Holder (Reviews) sur les éléments du Fragment (fragment_review)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-
-
         Glide.with(holder.userPicture.getContext())
          .load(reviewList.get(position).getPicture())
          .into(holder.userPicture);
@@ -82,14 +79,14 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     public int getItemCount() {
         return reviewList.size();
     }
-//retourne au recyclerview le nombre d elements
+//retourne au recyclerview le nombre d elements à afficher
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView userPicture;
 
        TextView userName, userReview;
        RatingBar userRate;
 
-//indique quel sorte d'élément
+//indique la nature des éléments à afficher et affectation des éléments par nature
 
         @SuppressLint("WrongViewCast")
         public MyViewHolder(@NonNull View itemView) {

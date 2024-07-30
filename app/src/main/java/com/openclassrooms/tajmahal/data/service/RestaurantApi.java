@@ -52,9 +52,9 @@ public interface RestaurantApi {
      */
     List<Review> getReviews();
 
-    //
+    //méthode pour recuperer l'user
     User getUser();
-
+//méthode pour ajoutter une review (void car ne renvoie rien)
     void addReview(String comment, Integer rate, String picture, String userName);
 
 
