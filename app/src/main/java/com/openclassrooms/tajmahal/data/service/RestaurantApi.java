@@ -57,7 +57,7 @@ public interface RestaurantApi {
 //méthode pour ajouter une review (void car ne renvoie rien)
     void addReview(String comment, Integer rate, String picture, String userName);
 
-
+// l'interface c'est de décrire des fonctionnalité qui vont être implémenté par les clases qui implémentent cette interface, l'idée de pouvoir changer facilment d'implémentation pour une interface
 
 }
 

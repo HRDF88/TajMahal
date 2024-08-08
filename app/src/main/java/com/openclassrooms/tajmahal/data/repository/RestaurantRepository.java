@@ -56,10 +56,10 @@ public class RestaurantRepository {
     public LiveData<Restaurant> getRestaurant() {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
     }
-
+// mutableLiveData car on peux faire un set values car juste observe sur un LiveData
     public LiveData<List<Review>> getReviews() {
         return new MutableLiveData<>(restaurantApi.getReviews());
-
+//ne pas attendre le résultat d"un service (API, base de données)...
     }
 
 // récupération de l'user et de la méthode addReview de l'API
