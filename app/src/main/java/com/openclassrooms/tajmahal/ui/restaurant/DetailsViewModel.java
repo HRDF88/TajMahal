@@ -97,16 +97,16 @@ public DetailsViewModel(){
     public  LiveData<List<Review>> getReviews() {
       return restaurantRepository.getReviews();
     }
-    //* Utilisation de la méthode getReviews située dans la classe RestaurantApi vers le View Model
+    //* Utilisation de la méthode getReviews située dans la classe RestaurantApi vers le View Model (chercher la méthode dans le repository)
 
 
     public LiveData<User> getUser() {return restaurantRepository.getUser();}
-    // utilisation de la methode getUser située dans la classe RestaurantApi vers le view Model
+    // utilisation de la methode getUser située dans la classe RestaurantApi vers le view Model (chercher la méthode dans le repository)
 
     public void addReview(String comment, Integer rate, String picture, String userName){
         restaurantRepository.addReview(comment,rate,picture,userName);
     }
-    // utilisation de la méthode AddReview située dans la clare RestaurantApi vers le View Model
+    // utilisation de la méthode AddReview située dans la clare RestaurantApi vers le View Model (chercher la méthode dans le repository)
 
 
 

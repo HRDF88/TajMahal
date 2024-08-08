@@ -159,7 +159,7 @@ public class NoticeFragment extends Fragment {
                     .load(user.getPicture())
                     .into(binding.userPictureReview);
         });
-        //permet d'aller cher les éléments au viewmodel
+        //permet de chercher les éléments au viewmodel
 
 
     }

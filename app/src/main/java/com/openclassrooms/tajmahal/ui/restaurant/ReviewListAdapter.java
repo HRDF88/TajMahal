@@ -15,11 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
+import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
+; import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.target.Target;
@@ -27,25 +27,53 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.ui.MainActivity;
-
+import com.openclassrooms.tajmahal.domain.model.Review;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder>{
-
-
-
-
     List<Review> reviewList;
     public ReviewListAdapter (){
         this.reviewList = new ArrayList<>();
     }
-
+// demande à Android de redessiner les éléments du recyclerView
     public void updateList(List<Review>reviews){
         Log.d("Adapter",reviews.size()+"");
         this.reviewList = reviews;
-        notifyDataSetChanged();
+        notifyDataSetChanged();//il ne redessine pas les éléments comparé au diffutils
     }
+
+   // public class ReviewDiffCallback extends DiffUtil.Callback {
+      //  private final List<Review> oldList;
+       // private final List<Review> newList;
+        //public ReviewDiffCallback(List<Review> oldList, List<Review> newList) {
+           // this.oldList = oldList; this.newList = newList; }
+
+       // @Override
+       // public int getOldListSize() { return oldList.size();
+        //}
+
+        //@Override
+        //public int getNewListSize() { return newList.size();
+       // }
+        //@Override
+       // public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            //return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+        //}
+        //@Override public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            //return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+        //} }
+
+    //public void updateList(List<Review> newList) {
+        // Méthode NotifyDataSetChanged : entraine un rafraichissement complet de la liste côté UI //
+        //this.listReview = newList; //notifyDataSetChanged();
+        // privilégier le diffUtil pour regénérer à l'écran uniquement les éléments de la liste qui ont changé // Méthode DiffUtil : entraine un rafraichissement partiel de la liste côté UI
+        //DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ReviewDiffCallback(listReview, newList));
+        //listReview.clear();
+        //listReview.addAll(newList);
+        //diffResult.dispatchUpdatesTo(this);
+    //}
+
 // View Holder pour Recycler View
     @NonNull
     @Override
@@ -57,8 +85,10 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
         return new ReviewListAdapter.MyViewHolder(view);
     }
 
+   
 
-// binding des éléments du View Holder (Reviews) sur les éléments du Fragment (fragment_review)
+
+    // binding des éléments du View Holder (Reviews) sur les éléments du Fragment (fragment_review)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Glide.with(holder.userPicture.getContext())
