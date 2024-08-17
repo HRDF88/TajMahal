@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
+import com.openclassrooms.tajmahal.data.service.RestaurantApi;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
@@ -26,7 +27,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  * MainViewModel is responsible for preparing and managing the data for the {@link DetailsFragment}.
  * It communicates with the {@link RestaurantRepository} to fetch restaurant details and provides
  * utility methods related to the restaurant UI.
- *
+ * <p>
  * This ViewModel is integrated with Hilt for dependency injection.
  */
 @HiltViewModel
@@ -43,9 +44,6 @@ public class DetailsViewModel extends ViewModel {
     public DetailsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
-public DetailsViewModel(){
-        this.restaurantRepository= new RestaurantRepository(new RestaurantFakeApi());
-}
 
     /**
      * Fetches the details of the Taj Mahal restaurant.
@@ -94,20 +92,38 @@ public DetailsViewModel(){
         return dayString;
     }
 
-    public  LiveData<List<Review>> getReviews() {
-      return restaurantRepository.getReviews();
+    /**
+     * Fetches the list of the reviews.
+     *
+     * @return LiveData object containing the list of reviews.
+     */
+    public LiveData<List<Review>> getReviews() {
+        return restaurantRepository.getReviews();
     }
-    //* Utilisation de la méthode getReviews située dans la classe RestaurantApi vers le View Model (chercher la méthode dans le repository)
 
-
-    public LiveData<User> getUser() {return restaurantRepository.getUser();}
-    // utilisation de la methode getUser située dans la classe RestaurantApi vers le view Model (chercher la méthode dans le repository)
-
-    public void addReview(String comment, Integer rate, String picture, String userName){
-        restaurantRepository.addReview(comment,rate,picture,userName);
+    /**
+     * Fetches the details of the user
+     *
+     * @return LiveData object containing th details of the user.
+     */
+    public LiveData<User> getUser() {
+        return restaurantRepository.getUser();
     }
-    // utilisation de la méthode AddReview située dans la clare RestaurantApi vers le View Model (chercher la méthode dans le repository)
 
+    /**
+     * Sending parameters for a new review
+     * <p>
+     * This method will make a network call using the provided {@link RestaurantRepository} instance
+     * to add a new review.
+     *
+     * @param comment  String, user comment for a new review.
+     * @param rate     Integer, user rate for a new review.
+     * @param picture  String, user URL profile Picture for a new review.
+     * @param userName String, username for a new review.
+     */
+    public void addReview(String comment, Integer rate, String picture, String userName) {
+        restaurantRepository.addReview(comment, rate, picture, userName);
+    }
 
 
 }

@@ -10,16 +10,24 @@ import java.util.Objects;
  */
 public class Review {
 
-    /** The name of the user who left the review. */
+    /**
+     * The name of the user who left the review.
+     */
     private String username;
 
-    /** The profile picture of the user who left the review. */
+    /**
+     * The profile picture of the user who left the review.
+     */
     private String picture;
 
-    /** The comment or feedback given by the user. */
+    /**
+     * The comment or feedback given by the user.
+     */
     private String comment;
 
-    /** The rating provided by the user. Typically out of 5 or 10. */
+    /**
+     * The rating provided by the user. Typically out of 5 or 10.
+     */
     private int rate;
 
     /**

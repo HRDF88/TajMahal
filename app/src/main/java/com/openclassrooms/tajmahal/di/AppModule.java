@@ -1,5 +1,8 @@
 package com.openclassrooms.tajmahal.di;
 
+import android.util.Log;
+
+import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 
@@ -29,6 +32,19 @@ public class AppModule {
     @Provides
     @Singleton
     public RestaurantApi provideRestaurantApi() {
+        Log.d("AppModule", "ProvideRestaurantApi");
         return new RestaurantFakeApi();
+    }
+
+    /**
+     * Provides a singleton instance of the RestaurantRepository.
+     *
+     * @return A Singleton instance of the RestaurantRepository.
+     */
+    @Provides
+    @Singleton
+    public RestaurantRepository provideRestaurantRepository(RestaurantApi restaurantApi) {
+        Log.d("AppModule", "provideRestaurantRepository");
+        return new RestaurantRepository(restaurantApi);
     }
 }

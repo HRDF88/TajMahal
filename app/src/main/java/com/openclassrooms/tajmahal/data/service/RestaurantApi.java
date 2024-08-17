@@ -15,7 +15,7 @@ import java.util.List;
  * this interface might be implemented using a library like Retrofit, and would include annotations
  * specifying the HTTP methods (like GET, POST), the endpoint URL, and other API-specific details.
  * </p>
- *
+ * <p>
  * For beginners: An interface in Java is a blueprint of a class or you can say it is a collection of
  * abstract methods and static constants. In an interface, each method is public and abstract but it does
  * not contain any constructor. An interface is not a class. Writing an interface is similar to writing a class,
@@ -52,12 +52,26 @@ public interface RestaurantApi {
      */
     List<Review> getReviews();
 
-    //méthode pour recuperer l'user
+    /**
+     * Retrieves the details of a user.
+     * <p>
+     * This method will usually be connected to a network call or database query in its
+     * implementing class, fetching the details of a user
+     *
+     * @return The {@link User} object containing all the details of a user.
+     */
     User getUser();
-//méthode pour ajouter une review (void car ne renvoie rien)
+
+    /**
+     * Sending parameters for a new review.
+     * <p>
+     * This method will usually be connected to a network call or database query in its
+     * implementing class, sending the details of a new review
+     * @param comment String, user comment for a new review.
+     * @param rate Integer, user rate for a new review.
+     * @param picture String, user URL profile Picture for a new review.
+     * @param userName String, username for a new review.
+     */
     void addReview(String comment, Integer rate, String picture, String userName);
-
-// l'interface c'est de décrire des fonctionnalité qui vont être implémenté par les clases qui implémentent cette interface, l'idée de pouvoir changer facilment d'implémentation pour une interface
-
 }
 

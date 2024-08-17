@@ -1,5 +1,8 @@
 package com.openclassrooms.tajmahal.data.service;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.domain.model.User;
@@ -31,17 +34,14 @@ import java.util.List;
  */
 public class RestaurantFakeApi implements RestaurantApi {
 
-    List<Review> reviews = Arrays.asList(
+    public static List<Review> reviews = Arrays.asList(
             new Review("Ranjit Singh", "https://xsgames.co/randomusers/assets/avatars/male/71.jpg", "Service très rapide et nourriture délicieuse, nous mangeons ici chaque week-end, c'est très rapide et savoureux. Continuez ainsi!", 5),
             new Review("Martyna Siddeswara", "https://xsgames.co/randomusers/assets/avatars/female/31.jpg", "Un service excellent et des plats incroyablement savoureux. Nous sommes vraiment satisfaits de notre expérience au restaurant.", 4),
             new Review("Komala Alanazi", "https://xsgames.co/randomusers/assets/avatars/male/46.jpg", "La cuisine est délicieuse et le service est également excellent. Le propriétaire est très sympathique et veille toujours à ce que votre repas soit satisfaisant. Cet endroit est un choix sûr!", 5),
             new Review("David John", "https://xsgames.co/randomusers/assets/avatars/male/67.jpg", "Les currys manquaient de diversité de saveurs et semblaient tous à base de tomates. Malgré les évaluations élevées que nous avons vues et nos attentes, nous avons été déçus.", 2),
             new Review("Emilie Hood", "https://xsgames.co/randomusers/assets/avatars/female/20.jpg", "Très bon restaurant Indien ! Je recommande.", 4),
-            new Review("Jocelin Testing","https://qph.cf2.quoracdn.net/main-qimg-c22737796519e6fa6d4c082d05ed2c5c-lq","Tester c'est douter",5)
+            new Review("Jocelin Testing", "https://qph.cf2.quoracdn.net/main-qimg-c22737796519e6fa6d4c082d05ed2c5c-lq", "Tester c'est douter", 5)
     );
-
-
-
 
 
     /**
@@ -76,25 +76,42 @@ public class RestaurantFakeApi implements RestaurantApi {
         return reviews;
     }
 
-    // Fake API de l'user
+    /**
+     * * Retrieves a hard-coded {@link User} objet for the "Taj Mahal".
+     * <p>
+     * This method simulates an API call by immediately returning a User object
+     * with pre-defined attributes.
+     *
+     * @return The hard-coded {@link User} for the "Taj Mahal".
+     */
     @Override
     public User getUser() {
-        return new User("Manon Garcia","https://philomonaco.com/wp-content/uploads/2022/04/thumbnail-photo-livre-manon-2.jpg");
+        return new User("Manon Garcia", "https://philomonaco.com/wp-content/uploads/2022/04/thumbnail-photo-livre-manon-2.jpg");
     }
 
-    // Add review pour ajoutter une review la list des review en 1er position gràce la liste TMP temporaire( gràce à Add et AddAll effectuée pas à pas donc asynchrone.  Contrôle des éléments : pas de commentaire vide ni de note <0
+    /**
+     * Create anew object {@link Review} for the "Taj Mahal".
+     *
+     * @param comment  String, user comment for a new review.
+     * @param rate     Integer, user rate for a new review.
+     * @param picture  String, user URL profile Picture for a new review.
+     * @param userName String, username for a new review.
+     * @return a new object {@link Review} for the "Taj Mahal" and a new List of reviews with the last addon in first position.
+     */
     @Override
     public void addReview(String comment, Integer rate, String picture, String userName) {
-        if(comment.isEmpty()) return;
-        if(rate==null) return;
-        if (rate<0) return;
-        Review review = new Review(userName,picture, comment,rate);
+        if (comment.isEmpty()) return;
+        if (rate == null) return;
+        if (rate < 0) return;
+        Review review = new Review(userName, picture, comment, rate);
 
         List<Review> tmp = new ArrayList<>();
         tmp.add(review);
         tmp.addAll(reviews);
 
-        reviews= tmp;
+        reviews = tmp;
+
+
     }
 
 }

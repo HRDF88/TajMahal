@@ -46,7 +46,7 @@ public class DetailsFragment extends Fragment {
      * It's used to perform one-time initialization.
      *
      * @param savedInstanceState A bundle containing previously saved instance state.
-     * If the fragment is being re-created from a previous saved state, this is the state.
+     *                           If the fragment is being re-created from a previous saved state, this is the state.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,9 +57,9 @@ public class DetailsFragment extends Fragment {
      * This method is called immediately after `onCreateView()`.
      * Use this method to perform final initialization once the fragment views have been inflated.
      *
-     * @param view The View returned by `onCreateView()`.
+     * @param view               The View returned by `onCreateView()`.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
+     *                           from a previous saved state as given here.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -72,11 +72,11 @@ public class DetailsFragment extends Fragment {
     /**
      * Creates and returns the view hierarchy associated with the fragment.
      *
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
-     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
-     * The fragment should not add the view itself but return it.
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached to.
+     *                           The fragment should not add the view itself but return it.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
+     *                           from a previous saved state as given here.
      * @return Returns the View for the fragment's UI, or null.
      */
     @Override
@@ -126,31 +126,26 @@ public class DetailsFragment extends Fragment {
         binding.buttonAdress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
-        detailsViewModel.getReviews().observe(this, reviews->{
+        detailsViewModel.getReviews().observe(this, reviews -> {
             int countReviews = reviews.size();
             int countRateOneStar = 0;
             int countRateTwoStar = 0;
-            int countRateThreeStar =0;
+            int countRateThreeStar = 0;
             int countRateFourStar = 0;
             int countRateFiveStar = 0;
-            for (Review review:reviews){
+            for (Review review : reviews) {
                 if (review.getRate() == 5) {
                     countRateFiveStar++;
-                }
-                else if (review.getRate() == 4) {
+                } else if (review.getRate() == 4) {
                     countRateFourStar++;
-                }
-                else if (review.getRate()==3) {
+                } else if (review.getRate() == 3) {
                     countRateThreeStar++;
-                } else if (review.getRate()==2) {
+                } else if (review.getRate() == 2) {
                     countRateTwoStar++;
-                }
-                else countRateOneStar++;
+                } else countRateOneStar++;
             }
 
-            //1 etape : recup taille total du nb de reviews,
-            //2 etape initialiser 5 compteur à 0 (int)
-            //je boucle sur les reviews, pour chaque reviews faire incrementation ++
+            //retrieve user ratings in View Model to count each rating.
 
             binding.progressBar5.setProgress(countRateFiveStar);
             binding.progressBar5.setMax(countReviews);
@@ -162,15 +157,15 @@ public class DetailsFragment extends Fragment {
             binding.progressBar2.setMax(countReviews);
             binding.progressBar.setProgress(countRateOneStar);
             binding.progressBar.setMax(countReviews);
-            //met à jour la progression des progressBar + les valeurs Max de celles-ci
+            //updates the progress of the progress bar and its maximum values
 
-            float rateAverage=((float) ((countRateOneStar) + (countRateTwoStar * 2) + (countRateThreeStar * 3) + (countRateFourStar * 4) + (countRateFiveStar * 5)) /countReviews);
-            binding.toiles.setRating(rateAverage);//changement pour setRating de façon à utiliser un float, binding.toiles.setMax(5) a utiliser si int
-            //calcul de la moyenne des notes plus affichage de celle-ci sur la ratingBar
-            binding.someId.setText(""+rateAverage+"");
-            //affichage de la moyenne des notes dans le textView en dessous de la ratingBar
-            binding.averageRate.setText("("+countReviews+")");
-            //affichage du nombre de reviews dans le textView countReview
+            float rateAverage = ((float) ((countRateOneStar) + (countRateTwoStar * 2) + (countRateThreeStar * 3) + (countRateFourStar * 4) + (countRateFiveStar * 5)) / countReviews);
+            binding.toiles.setRating(rateAverage);
+            //calculation of the average of the scores plus display of it on the ratingBar
+            binding.someId.setText("" + rateAverage + "");
+            //displaying the average rating in the textView below the ratingBar
+            binding.averageRate.setText("(" + countReviews + ")");
+            //display of the number of reviews
 
         });
 
@@ -179,7 +174,10 @@ public class DetailsFragment extends Fragment {
         });
 
     }
-//* permet de naviguer entre les fragment grace a la methode changer fragment crée ci-dessous
+
+    /**
+     * navigates to the NoticeFragment fragment
+     */
     private void changerFragment() {
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, NoticeFragment.newInstance())

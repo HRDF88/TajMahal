@@ -25,25 +25,27 @@ import org.jetbrains.annotations.Contract;
 
 import java.util.Objects;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+/**
+ * This class uses {@link com.openclassrooms.tajmahal.databinding.FragmentNoticeBinding} for data binding to its layout and
+ * * {@link DetailsViewModel} to interact with data sources and manage UI-related data.
+ */
+
+@AndroidEntryPoint
 public class NoticeFragment extends Fragment {
     private DetailsViewModel detailsViewModel;
     private @NonNull FragmentNoticeBinding binding;
 
     private ReviewListAdapter adapter;
-    private Context context;
-
     private User user;
 
+    /**
+     * To call the method of the immediate parent class.
+     */
     public NoticeFragment() {
         super();
-        //quand je construit mon objet,j'appel la méthode du parent (classe)
     }
-
-    public NoticeFragment(DetailsViewModel detailsViewModel) {
-        this.detailsViewModel = detailsViewModel;
-    }
-    //*permet d'utiliser binding des éléments xml
-
 
     public static Fragment newInstance() {
         NoticeFragment fragment = new NoticeFragment();
@@ -52,16 +54,37 @@ public class NoticeFragment extends Fragment {
         return fragment;
 
     }
+
+    /**
+     * This method is called when the fragment is first created.
+     * It's used to perform one-time initialization.
+     *
+     * @param savedInstanceState A bundle containing previously saved instance state.
+     *                           If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupViewModel();
     }
 
+    /**
+     * Initializes the ViewModel for this activity.
+     */
     private void setupViewModel() {
         detailsViewModel = new ViewModelProvider(this).get(DetailsViewModel.class);
     }
 
+    /**
+     * Creates and returns the view hierarchy associated with the fragment.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached to.
+     *                           The fragment should not add the view itself but return it.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed
+     *                           from a previous saved state as given here.
+     * @return Returns the View for the fragment's UI, or null and call others methods for update UI.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentNoticeBinding.inflate(inflater, container, false); // Binds the layout using view binding.
@@ -71,95 +94,51 @@ public class NoticeFragment extends Fragment {
         createReview();
         return binding.getRoot(); // Returns the root view.
     }
-// méthode permetant la MAJ UI des reviews
+
+    /**
+     * Sets up the UI-specific properties, {@link DetailsViewModel} for update reviews UI.
+     */
     private void setupUI() {
-        detailsViewModel.getReviews().observe(getViewLifecycleOwner(),reviews -> {
+        detailsViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
             adapter.updateList(reviews);
         });
 
     }
 
+    /**
+     * associates the adaptor with the recyclerview XML present on the fragment_notice layout.
+     */
     private void setupAdapter() {
         adapter = new ReviewListAdapter();
         binding.recyclerViewReviews.setLayoutManager(new LinearLayoutManager(getActivity()));
-    binding.recyclerViewReviews.setAdapter(adapter);
+        binding.recyclerViewReviews.setAdapter(adapter);
     }
 
-    // permet de recupérer le commentaire et note pour transmettre au view model (arguments ===> pour méthode addReview)
+    /**
+     * allows you to retrieve the comment and note to transmit to the ViewModel.
+     * (arguments for addReview method).
+     */
     private void createReview() {
         binding.userButton.setOnClickListener(view -> {
             String comment = Objects.requireNonNull(binding.userComment.getText()).toString();
             float rate = binding.userRatingBar.getRating();
-
-
-            detailsViewModel.addReview(comment,(int)rate,user.getPicture(),user.getUsername());
+            detailsViewModel.addReview(comment, (int) rate, user.getPicture(), user.getUsername());
             setupUI();
         });
     }
 
-    @NonNull
-    @Contract(" -> new")
-    private Object reviewElement() {
 
-        String commentUser = "";
-        String nameUser="";
-        int rateUser=0;
-        String pictureUser="";
-// utiliser la bibliotheque pour retourner url pictures et non image ressource
-        // binding des elements de l user pour recuperer les éléments saisies
-        binding.userComment.setText(commentUser);
-       // binding.userPictureReview.setText(pictureUser);
-        binding.userRatingBar.setRating(rateUser);
-        binding.userName.setText(nameUser);
-        if (rateUser==0){
-            AlertDialog alert11 = getAlertDialogNoRate();
-            alert11.show();
-        }
-        if (commentUser.isEmpty()){
-            AlertDialog alert11 = getAlertDialogNoComment();
-            alert11.show();
-        }
-        return new Review(commentUser,nameUser,pictureUser,rateUser);
-        
-
-
-
-    };
-// boite de dialog si pas de note de saisie dans la rating bar
-    private AlertDialog getAlertDialogNoRate() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage(R.string.alert_no_rate);
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "OK",
-                (dialog, id) -> dialog.cancel());
-
-
-        return builder1.create();
-    }
-    // boite de dialog si pas de commentaire de saisie
-    private AlertDialog getAlertDialogNoComment() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage(R.string.alert_no_comment);
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "OK",
-                (dialog, id) -> dialog.cancel());
-
-
-        return builder1.create();
-    }
-    private void setupUser(){
-        detailsViewModel.getUser().observe(getViewLifecycleOwner(),user -> {
+    /**
+     * Get elements in the viewmodel for User UI.
+     */
+    private void setupUser() {
+        detailsViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
             this.user = user;
             binding.userName.setText(user.getUsername());
             Glide.with(binding.userPictureReview.getContext())
                     .load(user.getPicture())
                     .into(binding.userPictureReview);
         });
-        //permet de chercher les éléments au viewmodel
 
 
     }
